@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+
+:root {
+    --emerald: #10b981;
+    --slate-dark: #0f172a;
+}
+
+body { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+.page-view { min-height: 100vh; transition: opacity 0.3s ease; }
+.glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid #e2e8f0; }
+
+/* Login Elements */
+.logo-icon { width: 64px; height: 64px; border-radius: 20px; display: flex; items-center; justify-content: center; margin: 0 auto; }
+.role-btn { width: 100%; padding: 1.25rem; border-radius: 1.25rem; border: 2px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; font-weight: 700; transition: all 0.2s; }
+.role-btn:hover { border-color: var(--emerald); background: #ecfdf5; color: #065f46; }
+.doctor-btn:hover { border-color: var(--slate-dark); background: #f8fafc; color: var(--slate-dark); }
+
+/* Triage Stepper */
+.top-nav { padding: 1.5rem 2.5rem; background: white; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 50; }
+.content-container { max-width: 800px; margin: 3rem auto; padding: 0 1rem; }
+.stepper { display: flex; justify-content: space-between; border-bottom: 2px solid #f1f5f9; }
+.step { padding-bottom: 1rem; font-size: 0.75rem; font-weight: 800; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.1em; transition: 0.3s; }
+.step.active { color: var(--emerald); border-bottom: 4px solid var(--emerald); }
+
+/* Form Elements */
+.form-input { width: 100%; padding: 1rem; border-radius: 1rem; background: #f8fafc; border: 1px solid #e2e8f0; outline: none; transition: 0.2s; }
+.form-input:focus { ring: 2px solid var(--emerald); border-color: transparent; }
+.upload-zone { border: 2px dashed #d1fae5; background: #f0fdf4; border-radius: 1.5rem; padding: 3rem; text-align: center; cursor: pointer; transition: 0.2s; }
+.upload-zone:hover { background: #dcfce7; }
+
+/* Dashboard Buttons */
+.main-btn { background: var(--slate-dark); color: white; padding: 1.25rem; border-radius: 1.25rem; font-weight: 800; width: 100%; transition: 0.2s; }
+.main-btn:hover { background: var(--emerald); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2); }
+.secondary-btn { background: #f1f5f9; color: #64748b; padding: 1.25rem; border-radius: 1.25rem; font-weight: 800; }
+
+/* AI Output */
+.badge { background: #d1fae5; color: #065f46; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; }
+.explainability-box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 1.5rem; border-radius: 1.25rem; }
+.ai-glow { box-shadow: 0 0 30px rgba(16, 185, 129, 0.1); }
+
+.animate-fade { animation: fadeIn 0.4s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Sidebar Nav */
+.nav-item { display: flex; align-items: center; cursor: pointer; padding: 0.5rem; border-radius: 0.5rem; font-weight: 600; color: #94a3b8; transition: 0.2s; }
+.nav-item.active { color: var(--emerald); }
