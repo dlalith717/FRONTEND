@@ -3,122 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medi.AI | Clinical Decision Support</title>
+    <title>Medi.AI | Clinical Decision Support System</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-slate-50 text-slate-900">
+<body class="bg-[#F8FAFC]">
 
-    <section id="view-login" class="page-view flex items-center justify-center bg-slate-950">
-        <div class="login-card glass-panel p-12 rounded-[3rem] shadow-2xl max-w-md w-full text-center">
-            <div class="logo-icon bg-emerald-500 shadow-emerald-200 shadow-lg">
-                <i class="fas fa-microchip text-white text-3xl"></i>
+    <section id="view-login" class="page-view flex items-center justify-center min-h-screen bg-[#0F172A]">
+        <div class="login-container glass shadow-2xl p-10 rounded-[2.5rem] w-full max-w-md text-center border border-slate-700/50">
+            <div class="logo-circle bg-emerald-500 mx-auto mb-6">
+                <i class="fas fa-notes-medical text-white text-3xl"></i>
             </div>
-            <h1 class="text-3xl font-black mt-6">Medi.<span class="text-emerald-500">AI</span></h1>
-            <p class="text-slate-400 text-sm mb-10">Intelligent Triage & Risk Engine</p>
+            <h1 class="text-white text-4xl font-extrabold tracking-tight">Medi.<span class="text-emerald-400">AI</span></h1>
+            <p class="text-slate-400 mt-2 mb-10">Intelligent Triage & Risk Stratification</p>
             
             <div class="space-y-4">
-                <button onclick="navigateTo('patient')" class="role-btn group">
-                    <span>Patient Portal</span>
-                    <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                <button onclick="navTo('patient')" class="role-card group">
+                    <div class="flex items-center space-x-4">
+                        <div class="icon-box bg-emerald-100 text-emerald-600"><i class="fas fa-user-pulse"></i></div>
+                        <div class="text-left">
+                            <p class="font-bold text-slate-800">Patient Portal</p>
+                            <p class="text-xs text-slate-500">Self-Triage & Document Upload</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right text-slate-300 group-hover:text-emerald-500"></i>
                 </button>
-                <button onclick="navigateTo('doctor')" class="role-btn doctor-btn group">
-                    <span>Clinician Dashboard</span>
-                    <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+
+                <button onclick="navTo('doctor')" class="role-card group">
+                    <div class="flex items-center space-x-4">
+                        <div class="icon-box bg-blue-100 text-blue-600"><i class="fas fa-stethoscope"></i></div>
+                        <div class="text-left">
+                            <p class="font-bold text-slate-800">Doctor Dashboard</p>
+                            <p class="text-xs text-slate-500">Clinical Queue & AI Insights</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right text-slate-300 group-hover:text-blue-500"></i>
                 </button>
             </div>
         </div>
     </section>
 
-    <section id="view-patient" class="page-view hidden">
-        <nav class="top-nav">
-            <h2 class="font-black text-xl">Medi.<span class="text-emerald-500">AI</span></h2>
-            <button onclick="navigateTo('login')" class="exit-btn">Exit Session</button>
-        </nav>
+    <section id="view-patient" class="page-view hidden min-h-screen">
+        <header class="navbar px-8 py-4 bg-white border-b flex justify-between items-center">
+            <div class="font-black text-2xl tracking-tighter">Medi.<span class="text-emerald-500">AI</span></div>
+            <div class="flex items-center space-x-6">
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Assessment Mode</span>
+                <button onclick="navTo('login')" class="logout-pill">Exit</button>
+            </div>
+        </header>
 
-        <div class="content-container">
-            <div class="stepper mb-12">
-                <span id="step-1-label" class="step active">01. Vitals</span>
-                <span id="step-2-label" class="step">02. EHR Upload</span>
-                <span id="step-3-label" class="step">03. AI Analysis</span>
+        <main class="max-w-5xl mx-auto py-12 px-6">
+            <div class="flex items-center justify-center mb-12 space-x-4">
+                <div id="step-dot-1" class="step-dot active">1</div>
+                <div class="h-[2px] w-12 bg-slate-200"></div>
+                <div id="step-dot-2" class="step-dot">2</div>
+                <div class="h-[2px] w-12 bg-slate-200"></div>
+                <div id="step-dot-3" class="step-dot">3</div>
             </div>
 
-            <div id="p-step-1" class="glass-panel p-10 rounded-3xl animate-fade">
-                <h3 class="text-2xl font-bold mb-6">Patient Input Module</h3>
-                <div class="grid grid-cols-2 gap-6">
-                    <input type="number" id="age" placeholder="Age" class="form-input">
-                    <select id="gender" class="form-input"><option>Male</option><option>Female</option></select>
-                    <input type="text" id="bp" placeholder="Blood Pressure (120/80)" class="form-input">
-                    <input type="number" id="hr" placeholder="Heart Rate (BPM)" class="form-input">
+            <div id="patient-space-1" class="space-block">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 glass-white p-8 rounded-3xl shadow-sm border border-slate-200">
+                        <h2 class="text-2xl font-bold mb-6">Patient Vitals <span class="text-emerald-500">&</span> Info</h2>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="input-group">
+                                <label>Full Name</label>
+                                <input type="text" id="p_name" placeholder="John Doe">
+                            </div>
+                            <div class="input-group">
+                                <label>Age</label>
+                                <input type="number" id="p_age" placeholder="Ex: 45">
+                            </div>
+                            <div class="input-group">
+                                <label>Blood Pressure (SYS/DIA)</label>
+                                <input type="text" id="p_bp" placeholder="120/80">
+                            </div>
+                            <div class="input-group">
+                                <label>Heart Rate (BPM)</label>
+                                <input type="number" id="p_hr" placeholder="72">
+                            </div>
+                        </div>
+                        <button onclick="moveStep(2)" class="btn-primary mt-8">Proceed to Symptoms <i class="fas fa-arrow-right ml-2"></i></button>
+                    </div>
+                    <div class="bg-emerald-600 rounded-3xl p-8 text-white">
+                        <i class="fas fa-info-circle text-3xl mb-4"></i>
+                        <h3 class="font-bold text-xl mb-2">Why this data?</h3>
+                        <p class="text-emerald-100 text-sm leading-relaxed">Vitals provide the baseline for our Hybrid Rule-Engine to detect acute clinical deterioration before Machine Learning processes your history.</p>
+                    </div>
                 </div>
-                <button onclick="nextStep(2)" class="main-btn mt-8">Next: Medical Files</button>
             </div>
 
-            <div id="p-step-2" class="glass-panel p-10 rounded-3xl hidden animate-fade">
-                <h3 class="text-2xl font-bold mb-4">EHR & Symptoms</h3>
-                <textarea id="symptoms" placeholder="Describe symptoms..." class="form-input h-32 mb-6"></textarea>
-                <div class="upload-zone" onclick="document.getElementById('file-input').click()">
-                    <i class="fas fa-cloud-upload-alt text-4xl text-emerald-400 mb-2"></i>
-                    <p class="font-bold">Load Health Document (EHR/EMR)</p>
-                    <input type="file" id="file-input" class="hidden">
-                </div>
-                <div class="flex gap-4 mt-8">
-                    <button onclick="nextStep(1)" class="secondary-btn">Back</button>
-                    <button onclick="processAI()" id="ai-trigger" class="main-btn flex-1">Generate AI Risk Report</button>
-                </div>
-            </div>
-
-            <div id="p-step-3" class="hidden animate-fade">
-                <div class="glass-panel p-10 rounded-[2.5rem] border-l-[12px] border-emerald-500 ai-glow">
-                    <div class="flex justify-between items-start">
+            <div id="patient-space-2" class="space-block hidden">
+                <div class="glass-white p-10 rounded-3xl border border-slate-200 shadow-sm">
+                    <h2 class="text-2xl font-bold mb-2">Health Document Upload</h2>
+                    <p class="text-slate-500 mb-8">Load your EMR/EHR file for deep history analysis.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                         <div>
-                            <span class="badge">Analysis Complete</span>
-                            <h2 class="text-4xl font-black mt-2">Risk: <span class="text-emerald-500">LOW</span></h2>
+                            <label class="block font-bold text-sm text-slate-700 mb-2">Describe Current Symptoms</label>
+                            <textarea id="p_symptoms" class="w-full h-48 p-4 rounded-2xl bg-slate-50 border-none ring-1 ring-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="e.g. Sudden sharp chest pain radiating to left arm..."></textarea>
                         </div>
-                        <div class="text-right">
-                            <p class="text-xs font-bold text-slate-400">AI CONFIDENCE</p>
-                            <p class="text-3xl font-black">94.8%</p>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4 my-8">
-                        <div class="p-4 bg-slate-50 rounded-2xl">
-                            <p class="text-xs font-bold text-slate-400">RECOMMENDED DEPT.</p>
-                            <p class="font-bold text-lg text-slate-700">General Medicine</p>
-                        </div>
-                        <div class="p-4 bg-slate-50 rounded-2xl">
-                            <p class="text-xs font-bold text-slate-400">URGENCY</p>
-                            <p class="font-bold text-lg text-slate-700">Routine (P-3)</p>
+                        <div id="drop-zone" class="upload-container">
+                            <input type="file" id="p_file" class="hidden">
+                            <i class="fas fa-file-medical text-5xl text-emerald-400 mb-4"></i>
+                            <h4 class="font-bold">EHR/EMR Parser</h4>
+                            <p class="text-xs text-slate-400 mt-2 px-6">Drag and drop health records or click to browse. Supports PDF & FHIR.</p>
+                            <button onclick="document.getElementById('p_file').click()" class="mt-6 bg-white text-emerald-600 px-6 py-2 rounded-full font-bold text-xs border border-emerald-100 hover:bg-emerald-50 transition-all">Browse Files</button>
                         </div>
                     </div>
-                    <div class="explainability-box">
-                        <h4 class="font-black text-xs text-emerald-600 mb-2"><i class="fas fa-brain mr-2"></i> EXPLAINABILITY LAYER</h4>
-                        <p id="ai-rationale" class="text-sm leading-relaxed italic text-slate-600"></p>
+                    <div class="flex space-x-4 mt-10">
+                        <button onclick="moveStep(1)" class="btn-secondary w-1/4">Back</button>
+                        <button onclick="triggerAI()" class="btn-primary flex-1">Start AI Risk Stratification</button>
                     </div>
                 </div>
             </div>
-        </div>
+
+            <div id="patient-space-3" class="space-block hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 glass-white rounded-[2.5rem] p-10 border-t-8 border-emerald-500 shadow-2xl relative overflow-hidden">
+                        <div class="flex justify-between items-start mb-10">
+                            <div>
+                                <span class="status-badge bg-emerald-100 text-emerald-700">Analysis Finalized</span>
+                                <h1 class="text-4xl font-black mt-4">Risk Level: <span id="risk-text" class="text-emerald-500">LOW</span></h1>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-[10px] font-black tracking-[0.2em] text-slate-400 uppercase">Confidence Score</p>
+                                <p class="text-4xl font-black text-slate-900">96.4%</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 mb-10">
+                            <div class="p-6 bg-slate-50 rounded-3xl">
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Department</p>
+                                <p id="rec-dept" class="text-xl font-bold">General Medicine</p>
+                            </div>
+                            <div class="p-6 bg-slate-50 rounded-3xl">
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Priority</p>
+                                <p class="text-xl font-bold">Category 3 (Routine)</p>
+                            </div>
+                        </div>
+
+                        <div class="explainability-layer bg-slate-900 p-8 rounded-[2rem] text-slate-300">
+                            <h4 class="text-emerald-400 font-bold mb-4 flex items-center">
+                                <i class="fas fa-brain mr-2"></i> Explainability Layer
+                            </h4>
+                            <p id="ai_insight" class="text-sm leading-relaxed font-light">
+                                Machine Learning detected no high-risk patterns in your EHR history. Rule-based triggers for cardiology were suppressed due to normal BP (120/80).
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="glass-white rounded-[2.5rem] p-8 border border-slate-200">
+                        <h4 class="font-bold text-slate-800 mb-6">Contributing Factors</h4>
+                        <div class="chart-container">
+                            <canvas id="factorChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="location.reload()" class="w-full mt-10 text-slate-400 font-bold uppercase text-xs tracking-[0.3em] hover:text-slate-800 transition-all">New Assessment</button>
+            </div>
+        </main>
     </section>
 
-    <section id="view-doctor" class="page-view hidden flex">
-        <aside class="w-64 bg-slate-900 p-8 text-white">
-            <h2 class="text-2xl font-black mb-12">Medi.<span class="text-emerald-500">AI</span></h2>
-            <nav class="space-y-8">
-                <div class="nav-item active"><i class="fas fa-th-list mr-3"></i> Triage Queue</div>
-                <div class="nav-item"><i class="fas fa-chart-bar mr-3"></i> Analytics</div>
-                <div onclick="navigateTo('login')" class="nav-item text-red-400 mt-20"><i class="fas fa-sign-out-alt mr-3"></i> Logout</div>
+    <section id="view-doctor" class="page-view hidden min-h-screen flex bg-slate-50">
+        <aside class="w-72 bg-slate-950 p-10 flex flex-col text-white">
+            <div class="font-black text-2xl mb-12">Medi.<span class="text-emerald-500">AI</span></div>
+            <nav class="flex-1 space-y-6">
+                <a href="#" class="nav-link active"><i class="fas fa-grid-2 mr-3"></i> Triage Queue</a>
+                <a href="#" class="nav-link"><i class="fas fa-user-group mr-3"></i> Patient Records</a>
+                <a href="#" class="nav-link"><i class="fas fa-chart-line mr-3"></i> Risk Trends</a>
             </nav>
+            <button onclick="navTo('login')" class="text-slate-500 font-bold hover:text-red-400 transition-all"><i class="fas fa-power-off mr-3"></i> Log Out</button>
         </aside>
-        <main class="flex-1 p-12">
-            <header class="flex justify-between items-end mb-12">
+
+        <main class="flex-1 p-12 overflow-y-auto">
+            <header class="flex justify-between items-end mb-10">
                 <div>
-                    <h1 class="text-4xl font-black text-slate-800">Triage Command</h1>
-                    <p class="text-slate-400">Hybrid ML & Rule-Based Monitoring</p>
+                    <h1 class="text-3xl font-black text-slate-800 tracking-tight">Clinical Dashboard</h1>
+                    <p class="text-slate-400">Dr. Richardson | Cardiology Unit</p>
+                </div>
+                <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                    <div class="text-right">
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-tighter">System Load</p>
+                        <p class="text-xs font-bold text-emerald-500">Active (0.2s Latency)</p>
+                    </div>
+                    <div class="h-8 w-[1px] bg-slate-200"></div>
+                    <i class="fas fa-bell text-slate-400"></i>
                 </div>
             </header>
-            <div class="bg-white rounded-3xl shadow-sm overflow-hidden" id="queue-list">
-                </div>
+
+            <div class="bg-white rounded-[2.5rem] shadow-sm border border-slate-200 overflow-hidden">
+                <table class="w-full text-left">
+                    <thead class="bg-slate-50 border-b border-slate-100">
+                        <tr>
+                            <th class="p-6 text-[10px] font-black uppercase text-slate-400">Patient Identity</th>
+                            <th class="p-6 text-[10px] font-black uppercase text-slate-400">Symptoms</th>
+                            <th class="p-6 text-[10px] font-black uppercase text-slate-400 text-center">AI Risk</th>
+                            <th class="p-6 text-[10px] font-black uppercase text-slate-400">Rec. Dept</th>
+                            <th class="p-6 text-[10px] font-black uppercase text-slate-400">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="doctor-queue" class="divide-y divide-slate-100">
+                        </tbody>
+                </table>
+            </div>
         </main>
     </section>
 
